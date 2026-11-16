@@ -1,0 +1,49 @@
+.bttn {
+  width: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.bttn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.primary {
+  background-color: greenyellow;
+  color: black;
+}
+.primary:hover:not(:disabled) {
+  background-color: gray;
+}
+.secondary {
+  background-color: white;
+  color: black;
+}
+.secondary:hover:not(:disabled) {
+  background-color: gray;
+}
+.danger {
+  background-color: red;
+  color: white;
+}
+.danger:hover:not(:disabled) {
+  background-color: rosybrown;
+}
+.sm {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+.md {
+  padding: 10px 16px;
+  font-size: 15px;
+}
+.lg {
+  padding: 14px 22px;
+  font-size: 18px;
+}
+.full-width {
+  width: 100%;
+}

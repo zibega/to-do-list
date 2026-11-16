@@ -1,80 +1,68 @@
-import React, {forwardRef,useRef,useState} from 'react';
+import React, { useRef, useState } from 'react';
 import './App.css';
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
-  variant?: 'primary'|'secondary'|'danger';
-  size?: 'sm'|'md'|'lg';
-  loading?: boolean;
-  fullWidth?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
+import { Button, ButtonProps } from './Components/Button/Button';
+
+interface ButtonItem extends ButtonProps {
+  id: string;
+  text: string;
+  ref?: React.Ref<HTMLButtonElement>;
 }
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({
-    variant = 'primary',
-    size = 'md',
-    loading = false,
-    fullWidth = false,
-    disabled = false,
-    leftIcon,
-    rightIcon,
-    className = '',
-    type = 'button',
-    children,
-    ...props
-    },
-    ref
-  )=>{
-    let classes = `bttn ${variant} ${size}`;
-    if (fullWidth) classes += ' full-width';
-    if (className) classes += ` ${className}`;
-    return(
-      <button
-        ref={ref}
-        type={type}
-        className={classes}
-        disabled={disabled || loading}
-        {...props}>
-        {loading ? (
-          'Loading...'
-        ):(<>
-            {leftIcon && <span>{leftIcon}</span>}
-            {children}
-            {rightIcon && <span>{rightIcon}</span>}
-           </>
-        )}
-      </button>
-      );
-  });
 function App() {
   const [loading, setLoading] = useState(false);
+  const [isFullWidth, setIsFullWidth] = useState(false);
   const myRef = useRef<HTMLButtonElement>(null);
-  const handleClick = () =>{
+  const handleClick =()=>{
     setLoading(true);
-    setTimeout(() => setLoading(false), 1500);
+    setTimeout(() =>setLoading(false), 1500);
   };
-  return(
+  const buttons: ButtonItem[]=[
+    {
+      id: '1',
+      text: 'Добавить',
+      ref: myRef,
+      variant: 'primary',
+      size: 'md',
+      leftIcon: '➕',
+      loading: loading,
+      fullWidth: isFullWidth,
+      onClick: handleClick,
+    },
+    {
+      id: '2',
+      text: 'Далее',
+      variant: 'secondary',
+      size: 'sm',
+      rightIcon: '➡️',
+      fullWidth: isFullWidth,
+    },
+    {
+      id: '3',
+      text: 'Удалить',
+      variant: 'danger',
+      size: 'lg',
+      disabled: true,
+      fullWidth: isFullWidth,
+    },
+    {
+      id: '4',
+      text: isFullWidth ? 'Вернуть обычный размер' : 'На всю ширину',
+      variant: 'primary',
+      fullWidth: true,
+      className: 'my-class',
+      onClick: () => setIsFullWidth(!isFullWidth),
+    },
+  ];
+  return (
     <div className="page">
-      <div className="card">
+      <div className={`card ${isFullWidth ? 'card-full' : ''}`}>
         <h2 className="card-title">Кнопки</h2>
-        <Button
-          ref={myRef}
-          variant="primary"
-          size="md"
-          leftIcon="➕"
-          loading={loading}
-          onClick={handleClick}>
-          Добавить
-        </Button>
-        <Button variant="secondary" size="sm" rightIcon="➡️">
-          Далее
-        </Button>
-        <Button variant="danger" size="lg" disabled>
-          Удалить
-        </Button>
-        <Button variant="primary" fullWidth className="my-class">
-          На всю ширину
-        </Button>
+        {buttons.map(({ id, text, ...btnProps })=>(
+          <Button key={id} {...btnProps}>
+            {text}
+          </Button>
+          ))}
       </div>
-    </div>);
+    </div>    
+  );
 }
 export default App;
