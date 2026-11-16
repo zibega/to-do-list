@@ -24,7 +24,7 @@ function App() {
       size: 'md',
       leftIcon: '➕',
       loading: loading,
-      fullWidth: isFullWidth,
+      fullWidth: false,
       onClick: handleClick,
     },
     {
@@ -33,7 +33,7 @@ function App() {
       variant: 'secondary',
       size: 'sm',
       rightIcon: '➡️',
-      fullWidth: isFullWidth,
+      fullWidth: false,
     },
     {
       id: '3',
@@ -41,20 +41,20 @@ function App() {
       variant: 'danger',
       size: 'lg',
       disabled: true,
-      fullWidth: isFullWidth,
+      fullWidth: false,
     },
     {
       id: '4',
       text: isFullWidth ? 'Вернуть обычный размер' : 'На всю ширину',
       variant: 'primary',
-      fullWidth: true,
+      fullWidth: isFullWidth,
       className: 'my-class',
       onClick: () => setIsFullWidth(!isFullWidth),
     },
   ];
   return (
     <div className="page">
-      <div className={`card ${isFullWidth ? 'card-full' : ''}`}>
+      <div className= "card">
         <h2 className="card-title">Кнопки</h2>
         {buttons.map(({ id, text, ...btnProps })=>(
           <Button key={id} {...btnProps}>
