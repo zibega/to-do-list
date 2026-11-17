@@ -10,7 +10,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   rightIcon?: React.ReactNode;
 }
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({
+  (
+    {
       variant = 'primary',
       size = 'md',
       loading = false,
@@ -23,22 +24,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       ...props
     },
-    ref
-  )=>{
+    ref,
+  ) => {
     let classes = `bttn ${variant} ${size}`;
     if (fullWidth) classes += ' full-width';
     if (className) classes += ` ${className}`;
     return (
-      <button
-        ref={ref}
-        type={type}
-        className={classes}
-        disabled={disabled || loading}
-        {...props}
-      >
+      <button ref={ref} type={type} className={classes} disabled={disabled || loading} {...props}>
         {loading ? (
           'Loading...'
-        ):(
+        ) : (
           <>
             {leftIcon && <span>{leftIcon}</span>}
             {children}
@@ -47,5 +42,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </button>
     );
-  }
+  },
 );
