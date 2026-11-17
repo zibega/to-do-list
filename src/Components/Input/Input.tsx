@@ -4,83 +4,82 @@ import './Input.css';
 export type InputVariant = 'outlined' | 'filled' | 'underlined';
 export type InputSize = 'sm' | 'md' | 'lg';
 
-export interface InputProps
-extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>{
-variant?: InputVariant;
-size?: InputSize;
-label?: string;
-helperText?: string;
-error?: boolean | string;
-leftIcon?: React.ReactNode;
-rightIcon?: React.ReactNode;
-clearable?: boolean;
-onClear?: ()=> void;
-fullWidth?: boolean;
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  variant?: InputVariant;
+  size?: InputSize;
+  label?: string;
+  helperText?: string;
+  error?: boolean | string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  clearable?: boolean;
+  onClear?: () => void;
+  fullWidth?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-(
-{
-variant = 'outlined',
-size = 'md',
-label,
-helperText,
-error = false,
-leftIcon,
-rightIcon,
-clearable = false,
-onClear,
-fullWidth = false,
-disabled = false,
-readOnly = false,
-type = 'text',
-id,
-className = '',
-value,
-defaultValue,
-onChange,
-...props
-},
-ref
-)=>{
-const generatedId = useId();
-const inputId = id || generatedId;
-const localRef = useRef<HTMLInputElement | null>(null);
-const [internalValue, setInternalValue] = useState(defaultValue ?? '');
-const [showPassword, setShowPassword] = useState(false);
-const isControlled = value !== undefined;
-const currentValue = isControlled ? value : internalValue;
-const isCheckbox = type === 'checkbox';
-const isPassword = type === 'password';
-const hasError = Boolean(error);
-const errorMessage = typeof error === 'string' ? error : '';
-const bottomText = errorMessage || helperText;
-const setRefs = (el: HTMLInputElement | null) =>{
+  (
+    {
+      variant = 'outlined',
+      size = 'md',
+      label,
+      helperText,
+      error = false,
+      leftIcon,
+      rightIcon,
+      clearable = false,
+      onClear,
+      fullWidth = false,
+      disabled = false,
+      readOnly = false,
+      type = 'text',
+      id,
+      className = '',
+      value,
+      defaultValue,
+      onChange,
+      ...props
+    },
+    ref,
+  ) => {
+    const generatedId = useId();
+    const inputId = id || generatedId;
+    const localRef = useRef<HTMLInputElement | null>(null);
+    const [internalValue, setInternalValue] = useState(defaultValue ?? '');
+    const [showPassword, setShowPassword] = useState(false);
+    const isControlled = value !== undefined;
+    const currentValue = isControlled ? value : internalValue;
+    const isCheckbox = type === 'checkbox';
+    const isPassword = type === 'password';
+    const hasError = Boolean(error);
+    const errorMessage = typeof error === 'string' ? error : '';
+    const bottomText = errorMessage || helperText;
+    const setRefs = (el: HTMLInputElement | null) => {
       localRef.current = el;
-      if (typeof ref ==='function'){
+      if (typeof ref === 'function') {
         ref(el);
-      }else if (ref){
+      } else if (ref) {
         ref.current = el;
       }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-      if (!isControlled){
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!isControlled) {
         setInternalValue(e.target.value);
       }
       onChange?.(e);
     };
 
-    const handleClear = () =>{
+    const handleClear = () => {
       if (!isControlled) {
         setInternalValue('');
       }
-      if (onClear){
+      if (onClear) {
         onClear();
-      } else if (onChange && localRef.current){
-        const fakeEvent ={
-          target: {...localRef.current, value:''},
-          currentTarget: {...localRef.current, value:''},
+      } else if (onChange && localRef.current) {
+        const fakeEvent = {
+          target: { ...localRef.current, value: '' },
+          currentTarget: { ...localRef.current, value: '' },
         } as React.ChangeEvent<HTMLInputElement>;
         onChange(fakeEvent);
       }
@@ -110,10 +109,7 @@ const setRefs = (el: HTMLInputElement | null) =>{
         </div>
       );
     }
-    const fieldClasses = [
-      'input-field',
-      fullWidth ? 'input-field--full-width' : '',
-    ]
+    const fieldClasses = ['input-field', fullWidth ? 'input-field--full-width' : '']
       .filter(Boolean)
       .join(' ');
 
@@ -121,23 +117,19 @@ const setRefs = (el: HTMLInputElement | null) =>{
       'input-wrapper',
       `input-${variant}`,
       `input-${size}`,
-      hasError ? 'input-error':'',
-      disabled ? 'input-disabled':'',
-      readOnly ? 'input-readonly':'',
+      hasError ? 'input-error' : '',
+      disabled ? 'input-disabled' : '',
+      readOnly ? 'input-readonly' : '',
       className,
     ]
       .filter(Boolean)
       .join(' ');
 
-    const showClearBtn =
-      clearable &&
-      !disabled &&
-      !readOnly &&
-      String(currentValue).length > 0;
+    const showClearBtn = clearable && !disabled && !readOnly && String(currentValue).length > 0;
 
-    return(
+    return (
       <div className={fieldClasses}>
-        {label &&(
+        {label && (
           <label htmlFor={inputId} className="input-label">
             {label}
           </label>
@@ -156,7 +148,7 @@ const setRefs = (el: HTMLInputElement | null) =>{
             onChange={handleChange}
             {...props}
           />
-          {showClearBtn &&(
+          {showClearBtn && (
             <button
               type="button"
               className="input-action-btn"
@@ -166,15 +158,15 @@ const setRefs = (el: HTMLInputElement | null) =>{
               ✕
             </button>
           )}
-          {isPassword &&(
+          {isPassword && (
             <button
               type="button"
               className="input-action-btn"
               disabled={disabled}
               onClick={() => setShowPassword(!showPassword)}
-              aria-label={showPassword?'Скрыть пароль':'Показать пароль'}
+              aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
             >
-              {showPassword ?'🙈':'👁️'}
+              {showPassword ? '🙈' : '👁️'}
             </button>
           )}
 
@@ -182,15 +174,13 @@ const setRefs = (el: HTMLInputElement | null) =>{
         </div>
 
         {bottomText && (
-          <span
-            className={`input-helper ${hasError ?'input-helper--error':''}`}
-          >
+          <span className={`input-helper ${hasError ? 'input-helper--error' : ''}`}>
             {bottomText}
           </span>
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = 'Input';

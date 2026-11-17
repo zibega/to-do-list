@@ -1,17 +1,12 @@
-
 import './App.css';
 import { InputList, ButtonList } from './Wrappers';
 
-
-
 function App() {
- 
-  
   return (
     <div className="page">
-    <ButtonList/>
+      <ButtonList />
       <InputList />
-    </div>    
+    </div>
   );
 }
 export default App;
