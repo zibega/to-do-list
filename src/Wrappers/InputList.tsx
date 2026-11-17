@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Input } from './Input';
+import { useState } from 'react';
+import { Input } from '../Components/Input/Input';
 
-export function InputShow() {
+export const InputList =() =>{
   const [clearableText, setClearableText] = useState('Можно очистить');
   const [searchText, setSearchText] = useState('');
 
