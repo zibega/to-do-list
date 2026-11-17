@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './App.css';
 import { Button, ButtonProps } from './Components/Button/Button';
+import { InputShow } from './Components/Input/InputShow';
 
 interface ButtonItem extends ButtonProps {
   id: string;
@@ -62,6 +63,7 @@ function App() {
           </Button>
           ))}
       </div>
+      <InputShow />
     </div>    
   );
 }
