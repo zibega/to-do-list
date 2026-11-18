@@ -1,5 +1,5 @@
 import React, { useState,useRef } from 'react';
-import { Button, ButtonProps } from '../Components';
+import { Button, ButtonProps } from '../components';
 interface ButtonItem extends ButtonProps {
   id: string;
   text: string;
