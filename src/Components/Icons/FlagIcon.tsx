@@ -1,4 +1,4 @@
-export type FlagStatus = 'done' | 'in progress' | 'reject';
+import { FlagStatus } from "../../types";
 
 const FLAG_COLORS: Record<FlagStatus, string> = {
   done: '#76CC8E',

@@ -1,0 +1,1 @@
+export type FlagStatus = 'done' | 'in progress' | 'reject';

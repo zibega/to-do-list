@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Input } from '../Components';
+import { Button, Input } from '../components';
 
 interface LoginFormValues {
   login: string;

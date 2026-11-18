@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input } from '../Components/Input/Input';
+import { Input } from '../components/Input/Input';
 
 export const InputList =() =>{
   const [clearableText, setClearableText] = useState('Можно очистить');
