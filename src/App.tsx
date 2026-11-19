@@ -3,7 +3,7 @@ import avatar1 from './assets/Avatar.png';
 import avatar2 from './assets/Avatar1.png';
 import avatar3 from './assets/Avatar2.png';
 import { TaskCard } from './components';
-import { ButtonList, InputList, LoginForm } from './wrappers';
+import { ButtonList, InputList, LoginForm, CreateTask } from './wrappers';
 import { FlagStatus } from './types';
 
 const taskCardData = [
@@ -35,6 +35,7 @@ function App() {
       <ButtonList />
       <InputList />
       <LoginForm />
+      <CreateTask />
 
       {taskCardData.map(
         ({ id, title, description, tag, attachmentsCount, status, date, avatars }) => (
