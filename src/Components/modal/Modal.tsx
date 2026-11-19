@@ -22,19 +22,8 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
     }
   }, [isOpen]);
 
-  const handleBackdropClick = (event: React.MouseEvent<HTMLDialogElement>) => {
-    if (event.target === dialogRef.current) {
-      onClose();
-    }
-  };
-
   return (
-    <dialog
-      ref={dialogRef}
-      className="modal-dialog"
-      onClose={onClose}
-      onClick={handleBackdropClick}
-    >
+    <dialog ref={dialogRef} className="modal-dialog" onClose={onClose}>
       <div className="modal-content">
         <div className="modal-header">
           {title && <h2 className="modal-title">{title}</h2>}

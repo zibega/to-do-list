@@ -8,7 +8,7 @@
 }
 
 .modal-dialog::backdrop {
-  background-color: gray;
+  background-color: cadetblue;
   backdrop-filter: blur(2px);
 }
 
