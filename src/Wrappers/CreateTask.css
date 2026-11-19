@@ -11,29 +11,6 @@
   gap: 14px;
 }
 
-.create-task-select-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.create-task-select-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1d2d35;
-}
-
-.create-task-select {
-  padding: 10px 12px;
-  font-size: 15px;
-  font-family: inherit;
-  border: 1px solid gray;
-  border-radius: 6px;
-  background-color: #ffffff;
-  outline: none;
-  cursor: pointer;
-}
-
 .create-task-select:focus {
   border-color: blue;
 }

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './CreateTask.css';
-import { Button, Input, Modal, TaskCard, TaskCardProps } from '../components';
+import { Button, Input, Modal, TaskCard, TaskCardProps, Select, SelectOption} from '../components';
 import { FlagStatus } from '../types';
+
+const STATUS_OPTIONS: SelectOption[] = [
+  { value: 'done', label: 'done' },
+  { value: 'in progress', label: 'in progress' },
+  { value: 'reject', label: 'reject' },
+];
 
 export function CreateTask() {
   const [isOpen, setIsOpen] = useState(false);
@@ -132,21 +138,13 @@ export function CreateTask() {
             onChange={(e) => setAttachmentsCount(e.target.value)}
           />
 
-          <div className="create-task-select-field">
-            <label htmlFor="task-status" className="create-task-select-label">
-              Статус
-            </label>
-            <select
-              id="task-status"
-              className="create-task-select"
-              value={status}
-              onChange={(e) => setStatus(e.target.value as FlagStatus)}
-            >
-              <option value="done">done</option>
-              <option value="in progress">in progress</option>
-              <option value="reject">reject</option>
-            </select>
-          </div>
+          <Select
+            label="Статус"
+            fullWidth
+            options={STATUS_OPTIONS}
+            value={status}
+            onChange={(e) => setStatus(e.target.value as FlagStatus)}
+          />
 
           <div className="create-task-actions">
             <Button variant="secondary" onClick={handleClose}>
