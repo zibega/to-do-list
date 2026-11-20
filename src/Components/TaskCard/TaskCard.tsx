@@ -25,7 +25,7 @@ export function TaskCard({
     <div className="task-card">
       <div className="task-top">
         <h3 className="task-title">{title}</h3>
-        <p className="task-description">{description}</p>
+        {description && <p className="task-description">{description}</p>}
         {tag && <span className="task-tag">{tag}</span>}
       </div>
 
