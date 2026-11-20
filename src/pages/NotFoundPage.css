@@ -1,0 +1,34 @@
+.not-found-code {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 700;
+  color: #0013fe;
+  line-height: 1;
+}
+
+.not-found-text {
+  margin: 0;
+  font-size: 15px;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.not-found-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 23px;
+  border-radius: 5px;
+  background-color: #0013fe;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.not-found-link:hover {
+  opacity: 0.9;
+}
