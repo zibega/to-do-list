@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 6px;
   width: 240px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .select-full-width {
@@ -12,6 +13,7 @@
 .select-label {
   font-size: 14px;
   font-weight: 500;
+  color: #1d2d35;
   cursor: pointer;
 }
 
@@ -20,27 +22,33 @@
   padding: 10px 12px;
   font-size: 15px;
   font-family: inherit;
-  border: 1px solid gray;
-  border-radius: 6px;
-  background-color: white;
+  color: #1d2d35;
+  border: 1px solid #e6ecf0;
+  border-radius: 5px;
+  background-color: #ffffff;
   outline: none;
   cursor: pointer;
 }
 
-.select-element:focus {
-  border-color: blue;
+.select-element:hover:not(:disabled):not(.select-error) {
+  border-color: #1d2d35;
+}
+
+.select-element:focus:not(:disabled):not(.select-error) {
+  border-color: #0013fe;
 }
 
 .select-element:disabled {
   opacity: 0.5;
+  background-color: #e6ecf0;
   cursor: not-allowed;
 }
 
 .select-error {
-  border-color: red;
+  border-color: #ff0000;
 }
 
 .select-error-text {
   font-size: 12px;
-  color: red;
+  color: #ff0000;
 }
