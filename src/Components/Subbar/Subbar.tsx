@@ -1,29 +1,44 @@
 import './Subbar.css';
-import avatar1 from '../../assets/Avatar.png';
-import avatar2 from '../../assets/Avatar1.png';
-import avatar3 from '../../assets/Avatar2.png';
 
-export const Subbar = () => {
+export interface SubbarProps {
+  title: string;
+  badge?: string;
+  avatars?: string[];
+  extraMembersCount?: number;
+  actionLabel?: string;
+  onActionClick?: () => void;
+}
+
+export const Subbar = ({
+  title,
+  badge,
+  avatars = [],
+  extraMembersCount = 0,
+  actionLabel = '+ New Member',
+  onActionClick,
+}: SubbarProps) => {
   return (
     <div className="subbar">
       <div className="subbar-inner">
         <div className="subbar-leading">
-          <h1 className="subbar-title">Product Design Team</h1>
-          <span className="subbar-badge">Sprint 9</span>
+          <h1 className="subbar-title">{title}</h1>
+          {badge && <span className="subbar-badge">{badge}</span>}
         </div>
 
         <div className="subbar-trailing">
-          <div className="subbar-avatars">
-            <img src={avatar1} alt="User 1" className="subbar-avatar" />
-            <img src={avatar2} alt="User 2" className="subbar-avatar" />
-            <img src={avatar3} alt="User 3" className="subbar-avatar" />
-            <span className="subbar-more">+4</span>
-          </div>
+          {(avatars.length > 0 || extraMembersCount > 0) && (
+            <div className="subbar-avatars">
+              {avatars.map((src, index) => (
+                <img key={index} src={src} alt={`User ${index + 1}`} className="subbar-avatar" />
+              ))}
+              {extraMembersCount > 0 && <span className="subbar-more">+{extraMembersCount}</span>}
+            </div>
+          )}
 
           <span className="subbar-divider" />
 
-          <button type="button" className="subbar-new-member">
-            + New Member
+          <button type="button" className="subbar-new-member" onClick={onActionClick}>
+            {actionLabel}
           </button>
         </div>
       </div>
