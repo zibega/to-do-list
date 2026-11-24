@@ -1,4 +1,5 @@
 import './Subbar.css';
+import { Button } from '../Button';
 
 export interface SubbarProps {
   title: string;
@@ -37,9 +38,13 @@ export const Subbar = ({
 
           <span className="subbar-divider" />
 
-          <button type="button" className="subbar-new-member" onClick={onActionClick}>
+          <Button
+            variant="secondary"
+            className="subbar-new-member"
+            onClick={onActionClick}
+          >
             {actionLabel}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
