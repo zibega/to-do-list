@@ -1,49 +1,64 @@
 .bttn {
-  width: 100px;
+  min-width: 103px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
 }
+
 .bttn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 .primary {
-  background-color: greenyellow;
-  color: black;
+  background-color: #0013fe;
+  color: #ffffff;
 }
+
 .primary:hover:not(:disabled) {
-  background-color: gray;
+  opacity: 0.9;
 }
+
 .secondary {
-  background-color: white;
-  color: black;
+  background-color: #e6ecf0;
+  color: #1d2d35;
 }
+
 .secondary:hover:not(:disabled) {
-  background-color: gray;
+  background-color: #d5dde3;
 }
+
 .danger {
-  background-color: red;
-  color: white;
+  background-color: #ff0000;
+  color: #ffffff;
 }
+
 .danger:hover:not(:disabled) {
-  background-color: rosybrown;
+  opacity: 0.85;
 }
+
 .sm {
-  padding: 6px 12px;
+  padding: 6px 14px;
   font-size: 13px;
 }
+
 .md {
-  padding: 10px 16px;
+  padding: 10px 23px;
   font-size: 15px;
 }
+
 .lg {
-  padding: 14px 22px;
-  font-size: 18px;
+  padding: 14px 26px;
+  font-size: 17px;
 }
+
 .full-width {
   width: 100%;
 }

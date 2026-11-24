@@ -1,0 +1,15 @@
+.login-page {
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-back-link {
+  color: #0013fe;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.login-back-link:hover {
+  text-decoration: underline;
+}

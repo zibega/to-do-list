@@ -1,0 +1,17 @@
+.task-filters {
+  padding: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.task-filters-search {
+  width: 318px;
+}
+
+.task-filters-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
