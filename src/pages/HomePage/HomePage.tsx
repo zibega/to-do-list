@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './HomePage.css';
-import { CreateTaskModal } from '../components/CreateTaskModal';
-import { BoardTask, ColumnId, COLUMNS, TaskBoard } from '../components/TaskBoard';
-import { TaskFilters } from '../components/TaskFilters';
+import { CreateTaskModal } from '../../components/CreateTaskModal';
+import { BoardTask, ColumnId, COLUMNS, TaskBoard } from '../../components/TaskBoard';
+import { TaskFilters } from '../../components/TaskFilters';
 
 export const HomePage = () => {
   const [tasks, setTasks] = useState<BoardTask[]>([]);

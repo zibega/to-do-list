@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import './App.css';
 import { HEADER_NAV_ITEMS } from './data/navigation';
