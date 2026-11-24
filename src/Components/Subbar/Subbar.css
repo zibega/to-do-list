@@ -84,7 +84,9 @@
   background-color: #c4c4c4;
 }
 
-.subbar-new-member {
+.bttn.subbar-new-member {
+  width: auto;
+  min-width: auto;
   border: none;
   background: transparent;
   padding: 0;
@@ -92,9 +94,9 @@
   font-size: 14px;
   font-weight: 500;
   color: #0013fe;
-  cursor: pointer;
 }
 
-.subbar-new-member:hover {
+.bttn.subbar-new-member:hover:not(:disabled) {
+  background: transparent;
   text-decoration: underline;
 }

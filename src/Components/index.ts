@@ -6,3 +6,5 @@ export * from './Icons';
 export * from './TaskCard';
 export * from './modal/Modal';
 export * from './select';
+export * from './Header';
+export * from './Subbar';

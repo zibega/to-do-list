@@ -8,7 +8,11 @@ interface LoginFormValues {
   rememberMe: boolean;
 }
 
-export function LoginForm() {
+interface LoginFormProps {
+  onSuccess?: () => void;
+}
+
+export function LoginForm({ onSuccess }: LoginFormProps) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -25,6 +29,7 @@ export function LoginForm() {
       password,
       rememberMe,
     });
+    onSuccess?.();
   };
 
   return (
