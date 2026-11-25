@@ -8,3 +8,5 @@ export * from './modal/Modal';
 export * from './select';
 export * from './Header';
 export * from './Subbar';
+export * from './ConfirmModal';
+export * from './TaskModal';

@@ -1,5 +1,5 @@
 import './TaskCard.css';
-import { ClipIcon, ClockIcon, FlagIcon,} from '../Icons';
+import { ClipIcon, ClockIcon, FlagIcon } from '../Icons';
 import { FlagStatus } from '../../types/IconTypes';
 
 export interface TaskCardProps {
@@ -10,6 +10,7 @@ export interface TaskCardProps {
   attachmentsCount?: number;
   status?: FlagStatus;
   avatars?: string[];
+  onClick?: () => void;
 }
 
 export function TaskCard({
@@ -20,9 +21,10 @@ export function TaskCard({
   attachmentsCount = 0,
   status = 'done',
   avatars = [],
+  onClick,
 }: TaskCardProps) {
   return (
-    <div className="task-card">
+    <div className={`task-card ${onClick ? 'task-card--clickable' : ''}`} onClick={onClick}>
       <div className="task-top">
         <h3 className="task-title">{title}</h3>
         {description && <p className="task-description">{description}</p>}
