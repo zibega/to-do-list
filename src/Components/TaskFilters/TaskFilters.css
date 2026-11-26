@@ -13,5 +13,9 @@
 .task-filters-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
+}
+
+.task-filters-status {
+  width: 150px;
 }

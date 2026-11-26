@@ -1,4 +1,3 @@
-import React from 'react';
 import './TaskBoard.css';
 import { Button, TaskCard, TaskCardProps } from '..';
 
@@ -19,10 +18,16 @@ export const COLUMNS: { id: ColumnId; title: string }[] = [
 export interface TaskBoardProps {
   columns: { id: ColumnId; title: string }[];
   tasks: BoardTask[];
+  emptyText?: string;
   onAddColumnTask: (column: ColumnId) => void;
 }
 
-export const TaskBoard = ({ columns, tasks, onAddColumnTask }: TaskBoardProps) => {
+export const TaskBoard = ({
+  columns,
+  tasks,
+  emptyText = 'Пока нет задач',
+  onAddColumnTask,
+}: TaskBoardProps) => {
   return (
     <div className="task-board">
       {columns.map((col) => {
@@ -58,9 +63,13 @@ export const TaskBoard = ({ columns, tasks, onAddColumnTask }: TaskBoardProps) =
             </div>
 
             <div className="board-column-tasks">
-              {columnTasks.map(({ id, column: _, ...cardProps }) => (
-                <TaskCard key={id} {...cardProps} />
-              ))}
+              {columnTasks.length > 0 ? (
+                columnTasks.map(({ id, column: _, ...cardProps }) => (
+                  <TaskCard key={id} {...cardProps} />
+                ))
+              ) : (
+                <p className="board-column-empty">{emptyText}</p>
+              )}
             </div>
           </section>
         );
