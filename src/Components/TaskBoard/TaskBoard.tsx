@@ -20,6 +20,7 @@ export interface TaskBoardProps {
   tasks: BoardTask[];
   emptyText?: string;
   onAddColumnTask: (column: ColumnId) => void;
+  onTaskClick?: (task: BoardTask) => void;
 }
 
 export const TaskBoard = ({
@@ -27,6 +28,7 @@ export const TaskBoard = ({
   tasks,
   emptyText = 'Пока нет задач',
   onAddColumnTask,
+  onTaskClick
 }: TaskBoardProps) => {
   return (
     <div className="task-board">
@@ -64,9 +66,16 @@ export const TaskBoard = ({
 
             <div className="board-column-tasks">
               {columnTasks.length > 0 ? (
-                columnTasks.map(({ id, column: _, ...cardProps }) => (
-                  <TaskCard key={id} {...cardProps} />
-                ))
+                columnTasks.map((task) => {
+                  const { id, column: _, ...cardProps } = task;
+                  return (
+                    <TaskCard
+                      key={id}
+                      {...cardProps}
+                      onClick={onTaskClick ? () => onTaskClick(task) : undefined}
+                    />
+                  );
+                })
               ) : (
                 <p className="board-column-empty">{emptyText}</p>
               )}
