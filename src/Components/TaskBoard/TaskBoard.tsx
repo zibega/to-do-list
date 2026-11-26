@@ -28,7 +28,7 @@ export const TaskBoard = ({
   tasks,
   emptyText = 'Пока нет задач',
   onAddColumnTask,
-  onTaskClick
+  onTaskClick,
 }: TaskBoardProps) => {
   return (
     <div className="task-board">
@@ -59,7 +59,7 @@ export const TaskBoard = ({
                   className="board-column-circle-btn"
                   title="Опции колонки"
                 >
-                  ...
+                  &middot;&middot;&middot;
                 </Button>
               </div>
             </div>

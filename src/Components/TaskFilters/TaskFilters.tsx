@@ -30,7 +30,7 @@ export const TaskFilters = ({
     <div className="task-filters">
       <div className="task-filters-search">
         <Input
-          type="search"
+          type="text"
           placeholder="Search Items"
           leftIcon={<SearchIcon />}
           clearable
@@ -48,9 +48,7 @@ export const TaskFilters = ({
             fullWidth
             options={statusOptions}
             value={statusFilter}
-            onChange={(e) =>
-              onStatusFilterChange(e.target.value as StatusFilterValue)
-            }
+            onChange={(e) => onStatusFilterChange(e.target.value as StatusFilterValue)}
           />
         </div>
 

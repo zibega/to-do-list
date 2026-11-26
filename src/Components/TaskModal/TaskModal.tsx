@@ -1,19 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import './TaskModal.css';
 import { Button, Input, Modal, Select } from '..';
 import { FlagStatus } from '../../types/IconTypes';
 import { BoardTask, ColumnId } from '../TaskBoard';
-import { INPUT_FIELDS, InputFieldName, SELECT_FIELDS } from './taskModalFields';
+import { INPUT_FIELDS, SELECT_FIELDS } from './taskModalFields';
 
-const EMPTY_FORM = {
-  title: '',
-  description: '',
-  tag: '',
-  date: '',
-  attachmentsCount: '',
-  status: 'done' as FlagStatus,
-  column: 'todo' as ColumnId,
-};
+interface TaskFormValues {
+  title: string;
+  description: string;
+  tag: string;
+  date: string;
+  attachmentsCount: string;
+  status: FlagStatus;
+  column: ColumnId;
+}
 
 export interface TaskModalProps {
   isOpen: boolean;
@@ -34,56 +35,39 @@ export const TaskModal = ({
   onSubmit,
   onDelete,
 }: TaskModalProps) => {
-  const [form, setForm] = useState(EMPTY_FORM);
-  const [errors, setErrors] = useState<Partial<Record<InputFieldName, string>>>({});
-  const titleInputRef = useRef<HTMLInputElement>(null);
-
   const isEditMode = Boolean(initialTask);
 
-  useEffect(() => {
-    if (!isOpen) return;
+  const { control, handleSubmit } = useForm<TaskFormValues>({
+    defaultValues: initialTask
+      ? {
+          title: initialTask.title,
+          description: initialTask.description,
+          tag: initialTask.tag ?? '',
+          date: initialTask.date,
+          attachmentsCount: String(initialTask.attachmentsCount ?? 0),
+          status: initialTask.status ?? 'done',
+          column: initialTask.column,
+        }
+      : {
+          title: '',
+          description: '',
+          tag: '',
+          date: '',
+          attachmentsCount: '',
+          status: 'done',
+          column: defaultColumn,
+        },
+  });
 
-    if (initialTask) {
-      setForm({
-        title: initialTask.title,
-        description: initialTask.description,
-        tag: initialTask.tag ?? '',
-        date: initialTask.date,
-        attachmentsCount: String(initialTask.attachmentsCount ?? 0),
-        status: initialTask.status ?? 'done',
-        column: initialTask.column,
-      });
-    } else {
-      setForm({ ...EMPTY_FORM, column: defaultColumn });
-    }
-
-    setErrors({});
-    setTimeout(() => titleInputRef.current?.focus(), 0);
-  }, [isOpen, initialTask, defaultColumn]);
-
-  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const nextErrors: Partial<Record<InputFieldName, string>> = {};
-    INPUT_FIELDS.forEach((field) => {
-      if (field.required && !form[field.name].trim()) {
-        nextErrors[field.name] = field.errorText;
-      }
-    });
-
-    if (Object.keys(nextErrors).length > 0) {
-      setErrors(nextErrors);
-      return;
-    }
-
+  const handleFormSubmit = (data: TaskFormValues) => {
     onSubmit({
-      column: form.column,
-      title: form.title.trim(),
-      description: form.description.trim(),
-      date: form.date.trim(),
-      tag: form.tag.trim() || undefined,
-      attachmentsCount: Number(form.attachmentsCount) || 0,
-      status: form.status,
+      column: data.column,
+      title: data.title.trim(),
+      description: data.description.trim(),
+      date: data.date.trim(),
+      tag: data.tag.trim() || undefined,
+      attachmentsCount: Number(data.attachmentsCount) || 0,
+      status: data.status,
       avatars: initialTask?.avatars ?? defaultAvatars,
     });
   };
@@ -94,35 +78,55 @@ export const TaskModal = ({
       onClose={onClose}
       title={isEditMode ? 'Редактировать задачу' : 'Новая задача'}
     >
-      <form className="task-modal-form" onSubmit={handleSubmit}>
-        {INPUT_FIELDS.map((field) => (
-          <Input
-            key={field.name}
-            ref={field.name === 'title' ? titleInputRef : undefined}
-            type={field.type}
-            min={field.min}
-            label={field.label}
-            placeholder={field.placeholder}
-            fullWidth
-            value={form[field.name]}
-            error={errors[field.name]}
-            onChange={(e) => {
-              setForm((prev) => ({ ...prev, [field.name]: e.target.value }));
-              setErrors((prev) => ({ ...prev, [field.name]: undefined }));
-            }}
+      <form className="task-modal-form" onSubmit={handleSubmit(handleFormSubmit)}>
+        {INPUT_FIELDS.map((fieldConfig) => (
+          <Controller
+            key={fieldConfig.name}
+            name={fieldConfig.name}
+            control={control}
+            rules={
+              fieldConfig.required
+                ? {
+                    required: fieldConfig.errorText,
+                    validate: (val) => val.trim().length > 0 || fieldConfig.errorText,
+                  }
+                : undefined
+            }
+            render={({ field, fieldState }) => (
+              <Input
+                ref={field.ref}
+                name={field.name}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                autoFocus={fieldConfig.name === 'title'}
+                type={fieldConfig.type}
+                min={fieldConfig.min}
+                label={fieldConfig.label}
+                placeholder={fieldConfig.placeholder}
+                fullWidth
+                error={fieldState.error?.message}
+              />
+            )}
           />
         ))}
 
-        {SELECT_FIELDS.map((field) => (
-          <Select
-            key={field.name}
-            label={field.label}
-            fullWidth
-            options={field.options}
-            value={form[field.name]}
-            onChange={(e) =>
-              setForm((prev) => ({ ...prev, [field.name]: e.target.value }) as typeof EMPTY_FORM)
-            }
+        {SELECT_FIELDS.map((fieldConfig) => (
+          <Controller
+            key={fieldConfig.name}
+            name={fieldConfig.name}
+            control={control}
+            render={({ field }) => (
+              <Select
+                name={field.name}
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                label={fieldConfig.label}
+                fullWidth
+                options={fieldConfig.options}
+              />
+            )}
           />
         ))}
 
