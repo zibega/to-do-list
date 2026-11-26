@@ -1,32 +1,48 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './HomePage.css';
-import { CreateTaskModal } from '../../components/CreateTaskModal';
+import { ConfirmModal, TaskModal } from '../../components';
 import { BoardTask, ColumnId, COLUMNS, TaskBoard } from '../../components/TaskBoard';
 import { StatusFilterValue, TaskFilters } from '../../components/TaskFilters';
-
-const STATUS_FILTER_OPTIONS = [
-  { value: 'all', label: 'Все статусы' },
-  { value: 'done', label: 'done' },
-  { value: 'in progress', label: 'in progress' },
-  { value: 'reject', label: 'reject' },
-];
-
+import { useTasks } from '../../context';
+import { DEFAULT_TASK_AVATARS, STATUS_FILTER_OPTIONS } from '../../data/board';
 export const HomePage = () => {
-  const [tasks, setTasks] = useState<BoardTask[]>([]);
+  const { tasks, addTask, updateTask, deleteTask } = useTasks();
+
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilterValue>('all');
-  const [isOpen, setIsOpen] = useState(false);
-  const [defaultColumn, setDefaultColumn] = useState<ColumnId>('todo');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [defaultColumn, setDefaultColumn] = useState<ColumnId>(COLUMNS[0].id);
+  const [editingTask, setEditingTask] = useState<BoardTask | null>(null);
+  const [taskToDelete, setTaskToDelete] = useState<BoardTask | null>(null);
 
-  const openModal = (column: ColumnId = 'todo') => {
+  const openCreateModal = (column: ColumnId = COLUMNS[0].id) => {
+    setEditingTask(null);
     setDefaultColumn(column);
-    setIsOpen(true);
+    setIsModalOpen(true);
   };
 
-  const handleCreateTask = (newTask: BoardTask) => {
-    setTasks((prev) => [...prev, newTask]);
-    setSearch('');
-    setIsOpen(false);
+  const openEditModal = (task: BoardTask) => {
+    setEditingTask(task);
+    setIsModalOpen(true);
+  };
+
+  const handleSubmitTask = (taskData: Omit<BoardTask, 'id'>) => {
+    if (editingTask) {
+      updateTask(editingTask.id, taskData);
+    } else {
+      addTask(taskData);
+      setSearch('');
+    }
+    setIsModalOpen(false);
+    setEditingTask(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!taskToDelete) return;
+    deleteTask(taskToDelete.id);
+    setTaskToDelete(null);
+    setIsModalOpen(false);
+    setEditingTask(null);
   };
 
   const normalizedQuery = search.trim().toLowerCase();
@@ -56,21 +72,36 @@ export const HomePage = () => {
           setSearch('');
           setStatusFilter('all');
         }}
-        onNewItemClick={() => openModal('todo')}
+        onNewItemClick={() => openCreateModal(COLUMNS[0].id)}
       />
 
       <TaskBoard
         columns={COLUMNS}
         tasks={filteredTasks}
         emptyText={hasActiveFilters ? 'Ничего не найдено' : 'Пока нет задач'}
-        onAddColumnTask={openModal}
+        onAddColumnTask={openCreateModal}
+        onTaskClick={openEditModal}
       />
 
-      <CreateTaskModal
-        isOpen={isOpen}
+      <TaskModal
+        isOpen={isModalOpen}
         defaultColumn={defaultColumn}
-        onClose={() => setIsOpen(false)}
-        onCreateTask={handleCreateTask}
+        initialTask={editingTask}
+        defaultAvatars={DEFAULT_TASK_AVATARS}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingTask(null);
+        }}
+        onSubmit={handleSubmitTask}
+        onDelete={() => editingTask && setTaskToDelete(editingTask)}
+      />
+
+      <ConfirmModal
+        isOpen={Boolean(taskToDelete)}
+        title="Удалить задачу?"
+        message={`Вы уверены, что хотите удалить задачу "${taskToDelete?.title}"?`}
+        onCancel={() => setTaskToDelete(null)}
+        onConfirm={handleConfirmDelete}
       />
     </div>
   );
