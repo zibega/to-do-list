@@ -38,25 +38,15 @@ export const TaskModal = ({
   const isEditMode = Boolean(initialTask);
 
   const { control, handleSubmit } = useForm<TaskFormValues>({
-    defaultValues: initialTask
-      ? {
-          title: initialTask.title,
-          description: initialTask.description,
-          tag: initialTask.tag ?? '',
-          date: initialTask.date,
-          attachmentsCount: String(initialTask.attachmentsCount ?? 0),
-          status: initialTask.status ?? 'done',
-          column: initialTask.column,
-        }
-      : {
-          title: '',
-          description: '',
-          tag: '',
-          date: '',
-          attachmentsCount: '',
-          status: 'done',
-          column: defaultColumn,
-        },
+    defaultValues: {
+      title: initialTask?.title ?? '',
+      description: initialTask?.description ?? '',
+      tag: initialTask?.tag ?? '',
+      date: initialTask?.date ?? '',
+      attachmentsCount: String(initialTask?.attachmentsCount ?? ''),
+      status: initialTask?.status ?? 'done',
+      column: initialTask?.column ?? defaultColumn,
+    },
   });
 
   const handleFormSubmit = (data: TaskFormValues) => {
