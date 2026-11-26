@@ -1,50 +1,73 @@
-import { useState } from 'react';
 import './HomePage.css';
-import { CreateTaskModal } from '../../components/CreateTaskModal';
-import { BoardTask, ColumnId, COLUMNS, TaskBoard } from '../../components/TaskBoard';
+import { ConfirmModal, TaskModal } from '../../components';
+import { COLUMNS, TaskBoard } from '../../components/TaskBoard';
 import { TaskFilters } from '../../components/TaskFilters';
+import { DEFAULT_TASK_AVATARS, STATUS_FILTER_OPTIONS } from '../../data/board';
+import { useBoard } from '../../hooks';
 
 export const HomePage = () => {
-  const [tasks, setTasks] = useState<BoardTask[]>([]);
-  const [search, setSearch] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [defaultColumn, setDefaultColumn] = useState<ColumnId>('todo');
-
-  const openModal = (column: ColumnId = 'todo') => {
-    setDefaultColumn(column);
-    setIsOpen(true);
-  };
-
-  const handleCreateTask = (newTask: BoardTask) => {
-    setTasks((prev) => [...prev, newTask]);
-    setSearch('');
-    setIsOpen(false);
-  };
-
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(search.trim().toLowerCase())
-  );
+  const {
+    search,
+    setSearch,
+    statusFilter,
+    setStatusFilter,
+    filteredTasks,
+    hasActiveFilters,
+    resetFilters,
+    isModalOpen,
+    defaultColumn,
+    editingTask,
+    taskToDelete,
+    openCreateModal,
+    openEditModal,
+    closeModal,
+    handleSubmitTask,
+    requestDeleteEditingTask,
+    cancelDelete,
+    confirmDelete,
+  } = useBoard();
 
   return (
     <div className="home-container">
       <TaskFilters
         search={search}
+        statusFilter={statusFilter}
+        statusOptions={STATUS_FILTER_OPTIONS}
         onSearchChange={setSearch}
-        onNewItemClick={() => openModal('todo')}
+        onStatusFilterChange={setStatusFilter}
+        onResetFilters={resetFilters}
+        onNewItemClick={() => openCreateModal()}
       />
 
       <TaskBoard
         columns={COLUMNS}
         tasks={filteredTasks}
-        onAddColumnTask={openModal}
+        emptyText={hasActiveFilters ? 'Ничего не найдено' : 'Пока нет задач'}
+        onAddColumnTask={openCreateModal}
+        onTaskClick={openEditModal}
       />
 
-      <CreateTaskModal
-        isOpen={isOpen}
-        defaultColumn={defaultColumn}
-        onClose={() => setIsOpen(false)}
-        onCreateTask={handleCreateTask}
-      />
+      {isModalOpen && (
+        <TaskModal
+          isOpen
+          defaultColumn={defaultColumn}
+          initialTask={editingTask}
+          defaultAvatars={DEFAULT_TASK_AVATARS}
+          onClose={closeModal}
+          onSubmit={handleSubmitTask}
+          onDelete={requestDeleteEditingTask}
+        />
+      )}
+
+      {taskToDelete && (
+        <ConfirmModal
+          isOpen
+          title="Удалить задачу?"
+          message={`Вы уверены, что хотите удалить задачу "${taskToDelete.title}"?`}
+          onCancel={cancelDelete}
+          onConfirm={confirmDelete}
+        />
+      )}
     </div>
   );
 };
