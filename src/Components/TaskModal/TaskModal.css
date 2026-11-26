@@ -1,0 +1,15 @@
+.task-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.task-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+.task-modal-delete-btn {
+  margin-right: auto;
+}

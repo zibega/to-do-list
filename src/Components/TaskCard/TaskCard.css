@@ -97,3 +97,12 @@
 .task-avatar + .task-avatar {
   margin-left: -10px;
 }
+
+.task-card--clickable {
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+
+.task-card--clickable:hover {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
