@@ -1,10 +1,10 @@
-import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import './TaskModal.css';
 import { Button, Input, Modal, Select } from '..';
 import { FlagStatus } from '../../types/IconTypes';
 import { BoardTask, ColumnId } from '../TaskBoard';
 import { INPUT_FIELDS, SELECT_FIELDS } from './taskModalFields';
+import { Datepicker } from '../DatePicker';
 
 interface TaskFormValues {
   title: string;
@@ -100,6 +100,24 @@ export const TaskModal = ({
             )}
           />
         ))}
+        <Controller
+          name="date"
+          control={control}
+          rules={{
+            required: 'Укажите дату',
+            validate: (val) => val.trim().length > 0 || 'Укажите дату',
+          }}
+          render={({ field, fieldState }) => (
+            <Datepicker
+              label="Дата"
+              placeholder="Выберите дату"
+              fullWidth
+              value={field.value}
+              error={fieldState.error?.message}
+              onChange={field.onChange}
+            />
+          )}
+        />
 
         {SELECT_FIELDS.map((fieldConfig) => (
           <Controller
