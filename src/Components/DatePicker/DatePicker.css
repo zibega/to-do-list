@@ -1,0 +1,106 @@
+.datepicker-container {
+  position: relative;
+  display: inline-flex;
+  width: 240px;
+}
+
+.datepicker-container--full-width {
+  width: 100%;
+}
+
+/* Перебиваем пунктир .input-readonly у Input, чтобы поле выглядело как обычный контрол */
+.input-wrapper.datepicker-input-wrapper {
+  border-style: solid;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.datepicker-input-wrapper .input-element {
+  cursor: pointer;
+}
+
+.datepicker-popup {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 264px;
+  padding: 12px;
+  background-color: #ffffff;
+  border: 1px solid #e6ecf0;
+  border-radius: 5px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 30;
+  font-family: 'Roboto', sans-serif;
+}
+
+.datepicker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.datepicker-month-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1d2d35;
+  text-transform: capitalize;
+}
+
+.bttn.datepicker-nav-btn {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 14px;
+}
+
+.datepicker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.datepicker-weekday {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  padding: 4px 0;
+}
+
+.bttn.datepicker-day-btn {
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  padding: 0;
+  background-color: transparent;
+  color: #1d2d35;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.bttn.datepicker-day-btn:hover:not(:disabled) {
+  background-color: #e6ecf0;
+}
+
+.bttn.datepicker-day-btn--today {
+  border: 1px solid #0013fe;
+  font-weight: 500;
+}
+
+.bttn.datepicker-day-btn--selected {
+  background-color: #0013fe;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.bttn.datepicker-day-btn--selected:hover:not(:disabled) {
+  background-color: #0013fe;
+  opacity: 0.9;
+}
+.datepicker-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}

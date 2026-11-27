@@ -6,3 +6,4 @@ export * from './BoardIcon';
 export * from './FeedIcon';
 export * from './ReportsIcon';
 export * from './SearchIcon';
+export * from './CalendarIcon';

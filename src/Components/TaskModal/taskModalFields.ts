@@ -1,6 +1,6 @@
 import { ColumnId, COLUMNS } from '../TaskBoard';
 
-export type InputFieldName = 'title' | 'description' | 'tag' | 'date' | 'attachmentsCount';
+export type InputFieldName = 'title' | 'description' | 'tag' | 'attachmentsCount';
 
 export type SelectFieldName = 'column' | 'status';
 
@@ -33,13 +33,6 @@ export const INPUT_FIELDS: InputFieldConfig[] = [
     name: 'tag',
     label: 'Тег',
     placeholder: 'Например: Sprint 9',
-  },
-  {
-    name: 'date',
-    label: 'Дата',
-    placeholder: 'Mar 4',
-    required: true,
-    errorText: 'Укажите дату',
   },
   {
     name: 'attachmentsCount',
